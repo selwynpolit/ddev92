@@ -16,6 +16,8 @@
     ],
     "require": {
         "composer/installers": "^1.9",
+        "drupal/address": "^1.9",
+        "drupal/addtoany": "^1.14",
         "drupal/admin_toolbar": "^2.3",
         "drupal/captcha": "^1.1",
         "drupal/config_ignore": "^2.2",
@@ -26,6 +28,7 @@
         "drupal/core-recommended": "^9",
         "drupal/select2_all": "^1.0@alpha",
         "drupal/shield": "^1.4",
+        "drupal/simple_sitemap": "^3.8",
         "drupal/token": "^1.7",
         "drupal/twig_tweak": "^2.6",
         "drush/drush": "^10.3"
