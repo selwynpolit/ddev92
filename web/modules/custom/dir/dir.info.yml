@@ -1,0 +1,6 @@
+name: DIR
+type: module
+description: DIR General catch-all module
+package: DIR
+core: 8.x
+core_version_requirement: ^8 || ^9

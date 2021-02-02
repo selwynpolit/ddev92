@@ -1,0 +1,7 @@
+dir.funnelback_proxy:
+  path: '/s/redirect'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\dir\Controller\FunnelbackProxy::build'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,6 @@
+name: selwyn
+type: module
+description: selwynp play module 1
+package: Selwyn
+core: 8.x
+core_version_requirement: ^8 || ^9

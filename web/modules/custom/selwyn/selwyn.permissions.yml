@@ -1,0 +1,4 @@
+administer selwyn configuration:
+  title: 'Administer selwyn configuration'
+  description: 'Optional description.'
+  restrict access: true

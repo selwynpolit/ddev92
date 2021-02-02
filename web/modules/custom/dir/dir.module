@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for DIR module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\node\NodeInterface;
+use Drupal\Core\Session\AccountInterface;
+
+//function dir_node_access(NodeInterface $node, $op, AccountInterface $account) {
+//  $teks_content_types = ['teks_publisher', 'teks_pub_correlation','teks_pub_citation', 'teks_pub_expectation', 'teks_pub_program', 'teks_pub_program_component'];
+//  $node_type = $node->gettype();
+//  //BLOCK ANONYMOUS ACCESS TO TEKS NODES
+//  if ($account->isAnonymous() && in_array($node_type, $teks_content_types)) {
+//    return AccessResult::forbidden()->cachePerPermissions();
+//  }
+//
+//  return AccessResult::neutral()->cachePerPermissions();
+//}
+
+/*
+ * implements hook_node_access().
+ *
+ * Note. What you need to know to make this work.
+ *   1. Add permission: edit any type content for the content type this
+ *    role will edit
+ *   2. Add field_dir_edit_permission to that content type
+ *   3. Add field_dir_edit_permission to the user entity
+ *   4. Add the user to the role specified above
+ *   5. Add the term to the user account e.g. "Careers editor"
+ *   6. Add the term to the node you want them to be able to edit.
+ *   7. Users will be able to only edit nodes of that type that have both
+ *     edit_any and the matching value in their user and the node. This module
+ *     overrides their edit permission based on the value in that field.
+ *   8. It is a little different from normal Drupal permissions in that it
+ *      is NOT cumulative.  It rather removes edit access if you don't have
+ *      the matching value in the field_dir_edit_permission
+ */
+function dir_node_access(\Drupal\node\NodeInterface $node, $op, \Drupal\Core\Session\AccountInterface $account) {
+
+  if ($op === 'update') {
+    $result = 0;
+    $type = $node->gettype();
+    //Don't override permissions if they don't have Drupal edit any permissions.
+    if (!$account->hasPermission('edit any ' . $type . ' content')) {
+      return;
+    }
+    $current_user = \Drupal::currentUser();
+    $user = \Drupal\user\Entity\User::load($current_user->id());
+    $users_perms = $user->get('field_dir_edit_permission')->getValue();
+    if ($node->hasField('field_dir_edit_permission')) {
+      $node_perms = $node->get('field_dir_edit_permission')->getValue();
+      foreach ($node_perms as $node_perm) {
+        if (in_array($node_perm, $users_perms)) {
+          $result = 1;
+          break;
+        }
+        $result = 0;
+      }
+      if (empty($node_perms) && $result == 0) {
+        return;
+      }
+      if ($result) {
+        return AccessResult::allowed()->cachePerPermissions();
+      }
+      else {
+        return AccessResult::forbidden()->cachePerPermissions();
+      }
+    }
+  }
+}

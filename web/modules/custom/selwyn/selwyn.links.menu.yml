@@ -1,0 +1,6 @@
+selwyn.settings_form:
+  title: selwyn
+  description: Configure selwyn.
+  parent: system.admin_config_system
+  route_name: selwyn.settings_form
+  weight: 10
