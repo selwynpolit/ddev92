@@ -1,0 +1,42 @@
+uuid: 863f5853-4caf-4f8c-85a9-a9b62c809912
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_dir_edit_permission
+field_name: field_dir_edit_permission
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'Careers Editor'
+      label: 'Careers Editor'
+    -
+      value: 'Cooperative Contracts Editor'
+      label: 'Cooperative Contracts Editor'
+    -
+      value: 'Information Security Editor'
+      label: 'Information Security Editor'
+    -
+      value: 'Technology Planning and Policy Editor'
+      label: 'Technology Planning and Policy Editor'
+    -
+      value: 'Telecom Editor'
+      label: 'Telecom Editor'
+    -
+      value: 'Shared Technology Services Editor'
+      label: 'Shared Technology Services Editor'
+    -
+      value: 'Executive Administration'
+      label: 'Executive Administration'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

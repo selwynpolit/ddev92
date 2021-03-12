@@ -1,0 +1,14 @@
+uuid: ee284599-1351-499b-9727-1711fb0e52ae
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.special
+  module:
+    - user
+id: user_remove_role_action.special
+label: 'Remove the special role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: special

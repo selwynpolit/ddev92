@@ -1,0 +1,14 @@
+uuid: 8f3bfd04-9eae-4a74-9132-6894d152e53d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: pages
+label: pages
+type: 'canonical_entities:node'
+pattern: '/pre/[node:menu-link:parent:url:path]/post/[node:title]'
+selection_criteria: {  }
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -1,0 +1,14 @@
+uuid: 596b9f5c-a7f0-4c0d-ad04-c70f4d633d88
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.special
+  module:
+    - user
+id: user_add_role_action.special
+label: 'Add the special role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: special

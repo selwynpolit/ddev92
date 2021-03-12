@@ -1,0 +1,30 @@
+uuid: c281c24e-b957-4576-8545-13a651e91211
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_media_field
+    - media.type.document
+    - media.type.image
+    - node.type.article
+id: node.article.field_media_field
+field_name: field_media_field
+entity_type: node
+bundle: article
+label: 'Media Field'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      document: document
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: document
+field_type: entity_reference

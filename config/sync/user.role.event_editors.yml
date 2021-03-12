@@ -1,0 +1,15 @@
+uuid: e2c02375-7dc5-41cc-b288-31377e337cf9
+langcode: en
+status: true
+dependencies: {  }
+id: event_editors
+label: 'Event Editors'
+weight: 3
+is_admin: null
+permissions:
+  - 'create event content'
+  - 'publish any node type event'
+  - 'revert event revisions'
+  - 'unpublish any node type event'
+  - 'view any unpublished event content'
+  - 'view event revisions'
