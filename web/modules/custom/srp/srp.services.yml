@@ -1,0 +1,6 @@
+services:
+  srp.event_subscriber:
+    class: Drupal\srp\EventSubscriber\SrpSubscriber
+    arguments: ['@messenger']
+    tags:
+      - { name: event_subscriber }

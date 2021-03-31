@@ -1,0 +1,6 @@
+srp.settings_form:
+  title: State Review Panel
+  description: Configure State Review Panel.
+  parent: system.admin_config_system
+  route_name: srp.settings_form
+  weight: 10

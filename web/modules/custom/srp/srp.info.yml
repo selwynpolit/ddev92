@@ -1,0 +1,6 @@
+name: State Review Panel
+type: module
+description: Exploring structures and code for TEA state review panel
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9

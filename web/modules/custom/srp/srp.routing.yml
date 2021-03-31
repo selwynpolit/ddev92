@@ -1,0 +1,47 @@
+srp.example:
+  path: '/srp/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\srp\Controller\SrpController::build'
+  requirements:
+    _permission: 'access content'
+
+srp.getpathitems:
+  path: '/srp/getpathitems'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\srp\Controller\SrpController::getPathItems'
+  requirements:
+    _permission: 'access content'
+
+
+srp.settings_form:
+  path: '/admin/config/system/srp'
+  defaults:
+    _title: 'State Review Panel settings'
+    _form: 'Drupal\srp\Form\SettingsForm'
+  requirements:
+    _permission: 'administer srp configuration'
+
+# /teks/admin/srp/program/{program}/expectation/{expectation}/correlation/{correlation}/{action}/{type}
+
+srp.correlation.voting:
+#  path: '/teks/admin/srp/program/{program}/expectation/{expectation}/correlation/{correlation}/{action}/{type}'
+  path: '/teks/admin/srp/program/{program_nid}/expectation/{expectation_nid}/correlation/{correlation_nid}/{action_verb}/{citation_type_string}'
+  defaults:
+    _title: 'Correlation Voting'
+    _controller: '\Drupal\srp\Controller\VoteController::build'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+tea_teks_srp.tea_teks_srp_vote_citation:
+  path: '/teks/admin/srp/program/{program}/voting/citation/{citation}'
+  defaults:
+    _title: 'Srp vote on citation'
+    _form: 'Drupal\srp\Form\SrpVoteOnCitationForm'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
