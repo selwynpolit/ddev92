@@ -5,6 +5,9 @@ namespace Drupal\srp\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+//use Drupal\srp\VotingProcessor;
+use Drupal\srp\VotingProcessorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a State Review Panel form.
@@ -14,7 +17,28 @@ class SrpVoteOnCitationForm extends FormBase {
   /**
    * @var int
    */
-  private static $instanceId;
+  private static int $instanceId;
+
+  /**
+   * @var VotingProcessorInterface $voting_processor
+   */
+  protected VotingProcessorInterface $voting_processor;
+
+  public function __construct(VotingProcessorInterface $votingProcessor) {
+    $this->voting_processor = $votingProcessor;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    // Instantiates this form class.
+    return new static(
+    // Load the service required to construct this class.
+      $container->get('srp.vote_processor')
+    );
+  }
+
 
   /**
    * {@inheritdoc}
@@ -45,31 +69,29 @@ class SrpVoteOnCitationForm extends FormBase {
     $form_state->set('citation_type_string', $citation_type_string);
     $form_state->set('citation_nid', $citation_nid);
 
-
     $form['actions'] = [
       '#type' => 'actions',
     ];
 
-    // TODO: replace classes: hilited-button and blue-button with
-    // Abel sanctioned classes.
-    //$current_vote_status: pending, approved, rejected, unknown?
+    // selected class will mean this one is selected
+    //$current_vote_status: pending, accepted, rejected, unknown?
     $attributes = [];
     if (isset($current_vote_status)) {
-      if ($current_vote_status === "approved") {
-        $attributes = ['class' => ['hilited-button', 'blue-button']];
+      if ($current_vote_status === "accepted") {
+        $attributes = ['class' => ['hilited-button', 'blue-button', 'selected']];
       }
     }
-    $form['actions']['approve'] = [
+    $form['actions']['accept'] = [
       '#type' => 'submit',
-      '#value' => $this->t("Approve Citation $citation_nid"),
+      '#value' => $this->t("Accept Citation $citation_nid"),
       '#citation_nid' => $citation_nid,
       '#voting_action' => 'Accept',
-      '#name' => "approveCitation_$citation_nid",
+      '#name' => "acceptCitation_$citation_nid",
       '#attributes' => $attributes,
     ];
 
 
-    //$current_vote_status: pending, approved, rejected, unknown?
+    //$current_vote_status: pending, accepted, rejected, unknown?
     $attributes = [];
     if (isset($current_vote_status)) {
       if ($current_vote_status === "rejected") {
@@ -93,10 +115,80 @@ class SrpVoteOnCitationForm extends FormBase {
       '#name' => "cancelCitation_$citation_nid",
     ];
 
+
+    $form['reject_radio'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Pick a colour'),
+      '#options' => [
+        'blue' => $this->t('Blue'),
+        'white' => $this->t('White'),
+        'black' => $this->t('Black'),
+        'other' => $this->t('Other'),
+      ],
+      '#attributes' => [
+        //define static name and id so we can easier select it
+        // 'id' => 'colour_select',
+        'name' => 'colour_select'. $citation_nid,
+      ],
+    ];
+
+
+
+
+
+    // Quick example of a conditional field
+
+    //create a list of radio boxes that will toggle the  textbox
+    //below if 'other' is selected
+    $form['colour_select'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Pick a colour'),
+      '#options' => [
+        'blue' => $this->t('Blue'),
+        'white' => $this->t('White'),
+        'black' => $this->t('Black'),
+        'other' => $this->t('Other'),
+      ],
+      '#attributes' => [
+        //define static name and id so we can easier select it
+        // 'id' => 'colour_select',
+        'name' => 'colour_select'. $citation_nid,
+      ],
+    ];
+
+    //this textfield will only be shown when the option 'Other'
+    //is selected from the radios above.
+
+    //$input_string = ':input[name="colour_select"]';
+    $input_string = ':input[name="colour_select' . $citation_nid . '"]';
+
+    $form['custom_colour'] = [
+      '#type' => 'textfield',
+      '#size' => '60',
+      '#placeholder' => 'Enter favourite colour',
+      '#attributes' => [
+        'id' => 'custom-colour',
+      ],
+      '#states' => [
+        //show this textfield only if the radio 'other' is selected above
+        'visible' => [
+          //don't mistake :input for the type of field. You'll always use
+          //:input here, no matter whether your source is a select, radio or checkbox element.
+          //':input[name="colour_select"]' => ['value' => 'other'],
+          $input_string => ['value' => 'other'],
+        ],
+      ],
+    ];
+
+
+
+
+
+
     //    $url = Url::fromUri('internal:/reports/search');
-    //    $form['vote_approve'] = [
+    //    $form['vote_accepte'] = [
     //      '#type' => 'link',
-    //      '#title' => $this->t('Approve Citation'),
+    //      '#title' => $this->t('Accept Citation'),
     //      '#url' => $url,
     //      '#attributes' => [
     //        'class' => [
@@ -161,16 +253,21 @@ class SrpVoteOnCitationForm extends FormBase {
     $citation_type_string = $form_state->get('citation_type_string');
 
     if ($voting_action === 'Accept') {
-      $this->messenger()->addStatus($this->t("Citation $citation_nid approved!"));
-      // TODO: Call vote service..
+      $this->messenger()->addStatus($this->t("Citation $citation_nid accepted!"));
 
+//      $voting_service = \Drupal::service('srp.vote_processor');
+//      $voting_service->voteOnCitation($citation_nid);
+      $this->voting_processor->voteOnCitation($citation_nid, "Accepted");
 
     }
     else if ($voting_action === 'Reject') {
+      $this->voting_processor->voteOnCitation($citation_nid, "Rejected");
       $this->messenger()->addStatus($this->t("Citation $citation_nid rejected!"));
     }
     else if ($voting_action === 'Cancel') {
       $this->messenger()->addStatus($this->t("Citation $citation_nid cancelled!"));
+      $this->voting_processor->cancelVoteOnCitation($citation_nid);
+
     }
 
 
@@ -187,14 +284,5 @@ class SrpVoteOnCitationForm extends FormBase {
 //    $form_state->setRedirect('<front>');
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function approveCitation(array &$form, FormStateInterface $form_state) {
-    $this->messenger()->addStatus($this->t('Approved!'));
-    $element = $form_state->getTriggeringElement();
-    //$form_state->setRedirect('internal:/teks/admin/srp/program/555/expectation/666/correlation/102/vote/narrative');
-    //$form_state->setRedirect('<front>');
-  }
 
 }

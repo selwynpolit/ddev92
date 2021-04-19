@@ -4,3 +4,7 @@ services:
     arguments: ['@messenger']
     tags:
       - { name: event_subscriber }
+  srp.vote_processor:
+    class: Drupal\srp\VotingProcessor
+    arguments: ['@entity_type.manager', '@current_user']
+

@@ -92,6 +92,8 @@ class VoteController extends ControllerBase {
       $path_item = [
         'correlation_nid' => 100,
         'status' => '',
+        'num_narratives_required' => 1,
+        'num_activities_required' => 1,
         'expectation_nid' => 666,  //sp we know we are moving to the next expec.
         'sort_order'=> 1,
         'narrative' => [
@@ -126,8 +128,8 @@ class VoteController extends ControllerBase {
       $path_item['sort_order'] = 2;
       $path_item['status'] = '';
       $path_item['display'] = 'closed';
-      $path_item['narrative']['open_in_accordion'] = 10201;
-      $path_item['narrative']['citations'] = [10201,10202,10203];
+      $path_item['narrative']['open_in_accordion'] = 217;
+      $path_item['narrative']['citations'] = [217,220,222];
       $path_item['activity']['citations'] = [10204,10205,10206];
       $path_item['narrative']['status'] = '';
       $path_item['activity']['status'] = '';
@@ -193,7 +195,7 @@ class VoteController extends ControllerBase {
 
           if (self::TESTING) {
             if ($correlation_nid == 102 && $citation_nid == 10201) {
-              $current_vote_status = "approved"; //pending, approved, rejected, unknown?
+              $current_vote_status = "accepted"; //pending, accepted, rejected, unknown?
             }
           }
 
