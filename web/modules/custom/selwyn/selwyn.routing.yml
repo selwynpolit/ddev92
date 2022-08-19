@@ -1,4 +1,4 @@
-selwyn.example:
+selwyn.example_ctrl:
   path: '/selwyn/example'
   defaults:
     _title: 'Example'
@@ -14,8 +14,8 @@ selwyn.settings_form:
   requirements:
     _permission: 'administer selwyn configuration'
 
-selwyn.example:
-  path: '/selwyn/example'
+selwyn.example_form:
+  path: '/selwyn/exampleform'
   defaults:
     _title: 'Example'
     _form: 'Drupal\selwyn\Form\ExampleForm'

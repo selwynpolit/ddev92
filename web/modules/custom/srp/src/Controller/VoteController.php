@@ -92,6 +92,8 @@ class VoteController extends ControllerBase {
       $path_item = [
         'correlation_nid' => 100,
         'status' => '',
+        'num_audience_teacher_required' => 0,
+        'num_audience_student_required' => 0,
         'num_narratives_required' => 1,
         'num_activities_required' => 1,
         'expectation_nid' => 666,  //sp we know we are moving to the next expec.
