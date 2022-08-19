@@ -1,16 +1,15 @@
-uuid: caedf3e0-ddeb-454a-8181-dbe891fedf0c
+uuid: 441d7ed2-8bb3-47fc-bc26-277780e01d5a
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.user.user.field_dir_edit_permission
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
     - image
     - user
 _core:
-  default_config_hash: K-1rBM8mTIkFp9RqOC2tMRUukOQ1xbRCfSKK8dEddnA
+  default_config_hash: FaQ9Ptcpxpg30AtiqRDtl_8zbJArHP1LPfug_s59TOA
 id: user.user.default
 targetEntityType: user
 bundle: user
@@ -19,35 +18,21 @@ content:
   account:
     weight: -10
     region: content
-    settings: {  }
-    third_party_settings: {  }
   contact:
     weight: 5
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_dir_edit_permission:
-    weight: 7
-    settings: {  }
-    third_party_settings: {  }
-    type: options_buttons
     region: content
   language:
     weight: 0
     region: content
-    settings: {  }
-    third_party_settings: {  }
   timezone:
     weight: 6
     region: content
-    settings: {  }
-    third_party_settings: {  }
   user_picture:
     type: image_image
+    weight: -1
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
-    weight: -1
-    region: content
 hidden: {  }

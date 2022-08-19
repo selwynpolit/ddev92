@@ -1,17 +1,15 @@
-uuid: 3cf4bc3e-e9db-4c6e-9261-8c917bc2437f
+uuid: 0c1ceb58-9f35-4601-af88-cabe71f9f3dc
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.node.page.body
-    - field.field.node.page.field_dir_edit_permission
-    - field.field.node.page.field_dir_type
     - node.type.page
   module:
     - path
     - text
 _core:
-  default_config_hash: AD_lefuYmjsKeH3OQApsyP_nLj6ZnGaALznLQSQ0Z_o
+  default_config_hash: SfpLhPExzvR0MgFp0Wp7CrmgEnhcqQ-fXIWFhbf4ue0
 id: node.page.default
 targetEntityType: node
 bundle: page
@@ -33,18 +31,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_dir_edit_permission:
-    weight: 121
-    settings: {  }
-    third_party_settings: {  }
-    type: options_buttons
-    region: content
-  field_dir_type:
-    weight: 122
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
   path:
     type: path
     weight: 30
@@ -53,24 +39,24 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 15
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 120
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 16
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
